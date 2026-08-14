@@ -1,9 +1,36 @@
 # Spending Tracker
 
-Reads a Capital One transaction CSV export and prints money-in vs.
-money-out per month, plus a breakdown by category.
+Reads a Capital One transaction CSV export and shows money-in vs.
+money-out per month, plus a breakdown by category. Comes in two forms
+that share the same categorization logic (`core.py`):
 
-## Usage
+- **`app.py`** — a web app: upload your CSV in the browser, see a
+  dashboard with charts. This is the one to use day-to-day.
+- **`tracker.py`** — the original command-line version: same numbers,
+  printed as text. Useful if you don't want to install anything beyond
+  Python.
+
+## Setup (one-time)
+
+Requires Python 3. Install the web app's dependencies:
+
+```
+pip install -r requirements.txt
+```
+
+## Usage — web app
+
+```
+streamlit run app.py
+```
+
+This opens a page in your browser (usually `http://localhost:8501`).
+Upload your CSV, pick a month from the dropdown, and you'll see money
+in/out, a chart of spending by category, and the tag/uncategorized
+breakdowns. Press Ctrl+C in the terminal to stop the app when you're
+done.
+
+## Usage — command line
 
 ```
 python3 tracker.py path/to/export.csv
@@ -59,7 +86,8 @@ the category. Re-run the script after editing — no other changes needed.
 ## Workflow
 
 1. Export transactions as CSV from Capital One.
-2. Run `python3 tracker.py <file>.csv`.
+2. Run `streamlit run app.py` and upload the file (or use
+   `python3 tracker.py <file>.csv` for the text version).
 3. Review the per-month summary. If merchants keep landing in the
    "no rule match" list under a category they don't belong in, add a
    keyword for them in `rules.json`.
